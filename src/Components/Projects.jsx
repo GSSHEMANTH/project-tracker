@@ -29,10 +29,10 @@ const Projects = () => {
     setTitle("");
     setDescription("");
   };
-
-  const openProject = (id) => {
+const openProject = (id) => {
   navigate(`/projects/${id}`);
 };
+
 
 
   const logout = () => {
@@ -78,12 +78,11 @@ const Projects = () => {
 
         {/* Project List */}
         {projects.map(p => (
-          <div key={p.id} className="project-card" onClick={() => openProject(p.id)}>
-            <h3>{p.title}</h3>
-            <p>{p.description}</p>
-            <span>📌 {p.tasks?.length || 0} Tasks</span>
-          </div>
-        ))}
+  <div key={p.id} className="project-card" onClick={() => openProject(p.id)}>
+    <h3>{p.title}</h3>
+    <p>{p.description}</p>
+  </div>
+))}
 
       </div>
     </div>

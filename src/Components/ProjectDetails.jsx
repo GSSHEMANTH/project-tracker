@@ -7,8 +7,6 @@ const ProjectDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const user = JSON.parse(localStorage.getItem("user"));
-
   const [project, setProject] = useState(null);
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
@@ -16,33 +14,41 @@ const ProjectDetails = () => {
   const [assignedTo, setAssignedTo] = useState("");
   const [search, setSearch] = useState("");
 
-  // Load project + tasks
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  // ✅ Load project + tasks
   useEffect(() => {
     const projects = JSON.parse(localStorage.getItem("projects")) || [];
-    const foundProject = projects.find(p => p.id === Number(id));
-    setProject(foundProject);
+    const currentProject = projects.find((p) => String(p.id) === String(id));
+    setProject(currentProject);
 
     const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    const projectTasks = storedTasks.filter(task => task.projectId === Number(id));
+    const projectTasks = storedTasks.filter(
+      (task) => String(task.projectId) === String(id)
+    );
     setTasks(projectTasks);
   }, [id]);
 
+  // ✅ Save tasks
   const saveTasks = (updatedTasks) => {
     const allTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    const otherTasks = allTasks.filter(task => task.projectId !== Number(id));
+    const otherTasks = allTasks.filter(
+      (task) => String(task.projectId) !== String(id)
+    );
     const finalTasks = [...otherTasks, ...updatedTasks];
     localStorage.setItem("tasks", JSON.stringify(finalTasks));
   };
 
+  // ✅ Add task
   const addTask = () => {
     if (!title || !assignedTo) {
-      alert("Enter title and assign user!");
+      alert("Fill all fields!");
       return;
     }
 
     const newTask = {
       id: Date.now(),
-      projectId: Number(id),
+      projectId: id,
       title,
       description,
       assignedTo,
@@ -58,128 +64,166 @@ const ProjectDetails = () => {
     setAssignedTo("");
   };
 
+  // ✅ Update status
   const updateStatus = (taskId, status) => {
-    const updatedTasks = tasks.map(task =>
+    const updatedTasks = tasks.map((task) =>
       task.id === taskId ? { ...task, status } : task
     );
     setTasks(updatedTasks);
     saveTasks(updatedTasks);
   };
 
+  // ✅ Delete task
   const deleteTask = (taskId) => {
-    const updatedTasks = tasks.filter(task => task.id !== taskId);
+    const updatedTasks = tasks.filter((task) => task.id !== taskId);
     setTasks(updatedTasks);
     saveTasks(updatedTasks);
   };
 
-  const filteredTasks =
-    user.role === "manager"
-      ? tasks
-      : tasks.filter(task => task.assignedTo === user.username);
+  if (!project) return <h2>Project not found ❌</h2>;
 
-  const searchedTasks = filteredTasks.filter(task =>
-    task.title.toLowerCase().includes(search.toLowerCase())
-  );
-
-  if (!project) return <h2>Loading project...</h2>;
-
+  // ✅ Stats
   const totalTasks = tasks.length;
-  const completedTasks = tasks.filter(t => t.status === "completed").length;
+  const completedTasks = tasks.filter((t) => t.status === "completed").length;
   const pendingTasks = totalTasks - completedTasks;
 
+  // ✅ Role-based tasks
+  const visibleTasks =
+    user.role === "manager"
+      ? tasks
+      : tasks.filter((t) => t.assignedTo === user.username);
+
+  // ✅ Search
+  const filteredTasks = visibleTasks.filter((t) =>
+    t.title.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
-    <div className="project-ui">
+    <div className="project-details-page">
 
-      <div className="project-header">
-        <button onClick={() => navigate("/projects")} className="back-btn">← Back</button>
-        <div>
-          <h2>{project.title}</h2>
-          <p>{project.description}</p>
+      {/* 🔷 TOP BAR */}
+      <div className="project-topbar">
+        <button className="back-btn" onClick={() => navigate("/projects")}>
+          ← Back
+        </button>
+
+        <h2>{project.title}</h2>
+
+        <div className="top-user">
+          👤 {user.username} ({user.role})
         </div>
       </div>
 
-      <div className="stats-grid">
-        <div className="stat-card">
-          <h3>{totalTasks}</h3>
-          <p>Total Tasks</p>
-        </div>
-        <div className="stat-card">
-          <h3>{completedTasks}</h3>
-          <p>Completed</p>
-        </div>
-        <div className="stat-card">
-          <h3>{pendingTasks}</h3>
-          <p>Pending</p>
-        </div>
+      {/* 🔷 STATS */}
+      <div className="project-stats">
+        <div className="stat-box">Total: {totalTasks}</div>
+        <div className="stat-box completed">Completed: {completedTasks}</div>
+        <div className="stat-box pending">Pending: {pendingTasks}</div>
       </div>
 
-      <div className="project-grid">
+      {/* 🔷 MAIN LAYOUT */}
+      <div className="project-layout">
 
-        {user.role === "manager" && (
-          <div className="card">
-            <h3>➕ Add Task</h3>
+        {/* 🟦 LEFT PANEL */}
+        <div className="left-panel">
 
-            <input
-              type="text"
-              placeholder="Task Title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
+          {/* ADD TASK (MANAGER ONLY) */}
+          {user.role === "manager" && (
+            <div className="add-task-box">
+              <h3>Add Task</h3>
 
-            <textarea
-              placeholder="Task Description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
+              <input
+                type="text"
+                placeholder="Task Title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
 
-            <select value={assignedTo} onChange={(e) => setAssignedTo(e.target.value)}>
-              <option value="">Assign User</option>
-              {users.filter(u => u.role === "member").map(u => (
-                <option key={u.id} value={u.username}>{u.username}</option>
-              ))}
-            </select>
+              <textarea
+                placeholder="Task Description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
 
-            <button className="primary-btn" onClick={addTask}>Add Task</button>
-          </div>
-        )}
+              <select
+                value={assignedTo}
+                onChange={(e) => setAssignedTo(e.target.value)}
+              >
+                <option value="">Assign User</option>
+                {users
+                  .filter((u) => u.role === "member")
+                  .map((u) => (
+                    <option key={u.id} value={u.username}>
+                      {u.username}
+                    </option>
+                  ))}
+              </select>
 
-        <div className="card">
-          <div className="task-header">
-            <h3>📋 Tasks</h3>
-            <input
-              type="text"
-              placeholder="Search..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
-
-          {searchedTasks.length === 0 && <p>No tasks found.</p>}
-
-          {searchedTasks.map(task => (
-            <div key={task.id} className="task-row">
-              <div>
-                <h4>{task.title}</h4>
-                <p>{task.description}</p>
-                <span>👤 {task.assignedTo}</span>
-              </div>
-
-              <div className="task-actions">
-                <select
-                  value={task.status}
-                  onChange={(e) => updateStatus(task.id, e.target.value)}
-                >
-                  <option value="pending">Pending</option>
-                  <option value="in-progress">In Progress</option>
-                  <option value="completed">Completed</option>
-                </select>
-
-                {user.role === "manager" && (
-                  <button className="danger-btn" onClick={() => deleteTask(task.id)}>✕</button>
-                )}
-              </div>
+              <button onClick={addTask}>Add Task</button>
             </div>
-          ))}
+          )}
+
+          {/* TASK LIST */}
+          <div className="task-list-box">
+            <h3>Tasks</h3>
+
+            <div className="task-scroll">
+              {filteredTasks.map((task) => (
+                <div key={task.id} className="task-card-ui">
+
+                  <div className="task-left">
+                    <h4>{task.title}</h4>
+                    <p>{task.description}</p>
+                    <span>👤 {task.assignedTo}</span>
+                  </div>
+
+                  <div className="task-right">
+                    <select
+                      className="task-status"
+                      value={task.status}
+                      onChange={(e) =>
+                        updateStatus(task.id, e.target.value)
+                      }
+                    >
+                      <option value="pending">Pending</option>
+                      <option value="completed">Completed</option>
+                    </select>
+
+                    {user.role === "manager" && (
+                      <button
+                        className="task-delete"
+                        onClick={() => deleteTask(task.id)}
+                      >
+                        ✕
+                      </button>
+                    )}
+                  </div>
+
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+        {/* 🟧 RIGHT PANEL (SEARCH) */}
+        <div className="right-panel">
+          <h3>Search Tasks</h3>
+
+          <input
+            type="text"
+            placeholder="Search task..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+
+          <div className="search-results">
+            {filteredTasks.map((task) => (
+              <div key={task.id} className="search-item">
+                {task.title}
+              </div>
+            ))}
+          </div>
         </div>
 
       </div>
