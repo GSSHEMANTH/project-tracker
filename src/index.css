@@ -660,3 +660,166 @@ input:focus, textarea:focus, select:focus {
     background-color: white;
   }
 }
+
+
+/* =========================================
+   ✨ MODERN INTERACTIVE ENHANCEMENTS
+   (Safe – No Layout Changes)
+========================================= */
+
+/* Smooth global animation */
+* {
+  transition: all 0.25s ease;
+}
+
+/* ===== Cards Elevation Upgrade ===== */
+.card,
+.project-card,
+.stat-card,
+.stat-box,
+.add-project-card,
+.add-task-box,
+.task-list-box,
+.right-panel,
+.login-card {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.card:hover,
+.project-card:hover,
+.stat-card:hover,
+.stat-box:hover,
+.add-project-card:hover,
+.add-task-box:hover,
+.task-list-box:hover,
+.right-panel:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== Buttons Enhancement ===== */
+button {
+  position: relative;
+  overflow: hidden;
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+/* Primary Button Glow */
+.primary-btn {
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+}
+
+.primary-btn:hover {
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.45);
+}
+
+/* Danger Button Glow */
+.danger-btn,
+.logout-btn,
+.task-card button {
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.danger-btn:hover,
+.logout-btn:hover,
+.task-card button:hover {
+  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.45);
+}
+
+/* ===== Input Focus Glow ===== */
+input:focus,
+textarea:focus,
+select:focus {
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* ===== Kanban Columns Upgrade ===== */
+.kanban-column {
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.kanban-column:hover {
+  background: #eef2f7;
+}
+
+/* ===== Task Card Modern Look ===== */
+.task-card {
+  border: 1px solid #e5e7eb;
+  background: linear-gradient(145deg, #ffffff, #f9fafb);
+}
+
+.task-card:hover {
+  border-color: #d1d5db;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== Search Dropdown Enhancement ===== */
+.search-dropdown {
+  animation: dropdownFade 0.25s ease forwards;
+}
+
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Stat Cards Gradient Accent ===== */
+.stat-box:nth-child(1) {
+  border-top: 4px solid #2563eb;
+}
+
+.stat-box:nth-child(2) {
+  border-top: 4px solid #10b981;
+}
+
+.stat-box:nth-child(3) {
+  border-top: 4px solid #f59e0b;
+}
+
+/* ===== Topbar Depth ===== */
+.project-topbar {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== Smooth Page Feel ===== */
+.projects-page,
+.project-details-page {
+  background: linear-gradient(to bottom right, #f8fafc, #eef2f7);
+}
+
+/* ===== Scrollbar Styling ===== */
+.task-scroll::-webkit-scrollbar,
+.search-results::-webkit-scrollbar {
+  width: 6px;
+}
+
+.task-scroll::-webkit-scrollbar-thumb,
+.search-results::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 6px;
+}
+
+.task-scroll::-webkit-scrollbar-thumb:hover,
+.search-results::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* ===== Highlight Animation Improved ===== */
+.highlight-task {
+  border: 2px solid #4f46e5;
+  box-shadow: 0 0 18px rgba(79, 70, 229, 0.4);
+}
+
