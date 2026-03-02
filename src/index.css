@@ -823,3 +823,166 @@ select:focus {
   box-shadow: 0 0 18px rgba(79, 70, 229, 0.4);
 }
 
+/* ======================================================
+   ✨ PREMIUM LIGHT THEME ENHANCEMENT (Non-destructive)
+   Adds depth, soft gradients & better shadows
+====================================================== */
+
+/* ---- Soft Gradient Background ---- */
+body {
+  background: linear-gradient(135deg, #eef2ff, #f8fafc, #e0f2fe);
+  background-attachment: fixed;
+}
+
+/* ---- Card Elevation Upgrade ---- */
+.card,
+.project-card,
+.task-card,
+.add-task-box,
+.right-panel,
+.project-topbar,
+.stat-card,
+.stat-box {
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08),
+              0 2px 6px rgba(15, 23, 42, 0.05);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  transition: all 0.25s ease;
+}
+
+.card:hover,
+.project-card:hover,
+.task-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+}
+
+/* ---- Modern Buttons ---- */
+.primary-btn {
+  background: linear-gradient(135deg, #4f46e5, #6366f1) !important;
+  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.35);
+  transition: all 0.25s ease;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(79, 70, 229, 0.45);
+}
+
+.danger-btn,
+.task-card button {
+  background: linear-gradient(135deg, #ef4444, #f87171) !important;
+  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.35);
+}
+
+.task-card button:hover {
+  transform: scale(1.05);
+}
+
+/* ---- Softer Inputs ---- */
+input,
+textarea,
+select {
+  border: 1px solid #e2e8f0;
+  transition: 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+/* ---- Topbar Enhancement ---- */
+.project-topbar {
+  background: linear-gradient(90deg, #ffffff, #f8fafc);
+  border: 1px solid #e2e8f0;
+}
+
+/* ---- Stat Cards Highlight ---- */
+.stat-box {
+  background: linear-gradient(145deg, #ffffff, #f1f5f9);
+  font-weight: 700;
+}
+
+/* ---- Search Dropdown Polish ---- */
+.search-dropdown {
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+}
+
+.search-item:hover {
+  background: #eef2ff;
+}
+
+/* ---- Avatar Polish ---- */
+.avatar-circle {
+  background: linear-gradient(135deg, #6366f1, #ec4899);
+  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35);
+}
+/* ======================================================
+   🔥 ENHANCED DEPTH VERSION (Slightly Stronger)
+   Adds more contrast + richer shadows
+====================================================== */
+
+/* Stronger Gradient Background */
+body {
+  background: linear-gradient(135deg, #e0e7ff, #f1f5f9, #dbeafe);
+  background-attachment: fixed;
+}
+
+/* Cards – More Elevation */
+.card,
+.project-card,
+.task-card,
+.add-task-box,
+.right-panel,
+.project-topbar,
+.stat-card,
+.stat-box {
+  box-shadow: 0 15px 35px rgba(15, 23, 42, 0.12),
+              0 4px 10px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(203, 213, 225, 0.7);
+}
+
+/* Stronger Hover */
+.card:hover,
+.project-card:hover,
+.task-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 45px rgba(15, 23, 42, 0.18);
+}
+
+/* Buttons – Slightly Stronger Glow */
+.primary-btn {
+  background: linear-gradient(135deg, #4338ca, #6366f1) !important;
+  box-shadow: 0 8px 22px rgba(67, 56, 202, 0.45);
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(67, 56, 202, 0.55);
+}
+
+.danger-btn,
+.task-card button {
+  background: linear-gradient(135deg, #dc2626, #f87171) !important;
+  box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4);
+}
+
+/* Stats Slightly More Visible */
+.stat-box {
+  background: linear-gradient(145deg, #ffffff, #e2e8f0);
+  font-weight: 700;
+}
+
+/* Search Dropdown Depth */
+.search-dropdown {
+  box-shadow: 0 18px 35px rgba(15, 23, 42, 0.18);
+}
+
+/* Avatar Slightly Stronger */
+.avatar-circle {
+  background: linear-gradient(135deg, #4f46e5, #db2777);
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.45);
+}
